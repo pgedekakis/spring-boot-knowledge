@@ -10,6 +10,7 @@ import java.util.List;
 public interface CompanyTypeService {
 
     CompanyType saveCompanyType(CompanyType companyType);
+    void deleteCompanyType(Long id);
 
     List<CompanyType> getAllCompanyType();
     ResponseEntity<CompanyType> getId(Long id);
