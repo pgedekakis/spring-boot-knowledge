@@ -1,7 +1,6 @@
 package com.postgre.empl.model;
 
 import lombok.Data;
-
 import javax.persistence.*;
 
 @Data

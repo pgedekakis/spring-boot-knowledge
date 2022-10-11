@@ -1,16 +1,12 @@
 package com.postgre.empl.service.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.postgre.empl.model.Combine;
-import com.postgre.empl.model.Company;
 import com.postgre.empl.model.Employee;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.extern.jackson.Jacksonized;
-
 import java.io.Serializable;
 import java.util.List;
 
@@ -47,11 +43,6 @@ public class CompanyEmployeeDTO extends  CompanyDTO implements Serializable {
         this.setCName(companyEmployeeDTO.getCName());
         this.setCAfm(companyEmployeeDTO.getCAfm());
     }
-
-
-
-
-
 }
 
 

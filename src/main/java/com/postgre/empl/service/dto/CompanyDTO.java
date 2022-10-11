@@ -4,7 +4,6 @@ package com.postgre.empl.service.dto;
 import com.postgre.empl.model.Company;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.sql.Date;
 
 @Data

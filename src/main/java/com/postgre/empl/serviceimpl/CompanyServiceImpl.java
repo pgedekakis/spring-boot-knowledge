@@ -18,7 +18,6 @@ import com.postgre.empl.service.mapper.ProjectMapper;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
 import java.util.*;
 
 
@@ -26,18 +25,13 @@ import java.util.*;
 @Log4j2
 public class CompanyServiceImpl implements CompanyService {
 
-
     private CompanyRepository companyRepository;
     private ProjectMapper projectMapper;
-
     private CombineService combineService;
-
     private CompanyTypeService companyTypeService;
     private CompanyTypeRepository companyTypeRepository;
     private CombineRepository combineRepository;
     private EmployeeRepository employeeRepository;
-
-
 
 
     public CompanyServiceImpl(CompanyRepository companyRepository,ProjectMapper projectMapper,CompanyTypeService companyTypeService,CombineService combineService,CompanyTypeRepository companyTypeRepository,CombineRepository combineRepository,EmployeeRepository employeeRepository) {
@@ -58,38 +52,23 @@ public class CompanyServiceImpl implements CompanyService {
         return companyRepository.save(company);
     }
     @Override
-    public CompanyType saveType(CompanyType companyType){
-        log.info("Entry save type with argument :{} ",companyType);
-        //return companyTypeRepository.save(companyType);
-        return companyTypeService.saveCompanyType(companyType);
-    }
-    @Override
     public List<Company> getAllCompany(){
-        log.info("Gettting all companies");
         return companyRepository.findAll();
     }
-
     @Override
     public ResponseEntity<Company> getId(Long id) {
         Company company = companyRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Company not exist with id :" + id));
-        log.info("Exit search for ID");
         return ResponseEntity.ok(company);
     }
-
     @Override
     public  List<CompanyDTO> getNameCompany(){
         List<Company> companyList = companyRepository.findAll();
         List<CompanyDTO> companyDTOS = new ArrayList<>();
         for(Company company :companyList){
-            log.info("Company added to list :{} ",company);
-            //CompanyDTO companyDTO = new CompanyDTO(company);
-           // CompanyDTO companyDTO = ObjectMapperUtils.map(company, CompanyDTO.class);
             CompanyDTO companyDTO= projectMapper.toDTO(company);
             companyDTOS.add(companyDTO);
-            log.info("DTO added to list :{} ",companyDTO);
         }
-        log.info("Exit loop");
         return companyDTOS;
     }
 
@@ -110,28 +89,20 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     public CompanyInformationDTO createCompanyInfo(CompanyInformationDTO companyInformationDTO){
-        log.info("Create company with DTO :{} ",companyInformationDTO);
         Company company= projectMapper.toEntity(companyInformationDTO.getCompanyDTO());
         Company newCompany = saveCompany(company);
         CompanyType companyType= new CompanyType();
         companyType.setcompid(newCompany.getId());
         companyType.setcotype(companyInformationDTO.getType());
-        log.info("Company saving....:{} ",companyType);
         companyTypeService.saveCompanyType(companyType);
-        log.info("Company saved....:{} ",companyType);
-
         for(Employee employee :companyInformationDTO.getEmployeeList()){
-            log.info("Employee found:{} ",employee);
-            log.info("Employee ID:{} ",employee.getId());
             Combine combine= new Combine();
             combine.setcompid(newCompany.getId());
             combine.setempid(employee.getId());
             combineService.saveCombine(combine);
             log.info("Leaving save Company Employee with argument :{} ", combine);
         }
-
         employeeRepository.saveAll(companyInformationDTO.getEmployeeList());
-
         return companyInformationDTO;
     }
 
@@ -142,13 +113,12 @@ public class CompanyServiceImpl implements CompanyService {
          company.setcAfm(companyInformationDTO.getCAfm());
          company.setcPhone(companyInformationDTO.getCPhone());
          company.setcYear(companyInformationDTO.getCYear());
-        companyRepository.save(company);
-
+        //UPDATES
+         companyRepository.save(company);
         updateCompanyTypeInfo(companyInformationDTO);
         updateCombineInfo(companyInformationDTO);
         return companyInformationDTO;
     }
-
     public CompanyInformationDTO updateCompanyTypeInfo(CompanyInformationDTO companyInformationDTO){
         CompanyType companyType= new CompanyType();
         companyType.setcompid(companyInformationDTO.getId());
@@ -158,10 +128,7 @@ public class CompanyServiceImpl implements CompanyService {
     }
     public CompanyInformationDTO updateCombineInfo(CompanyInformationDTO companyInformationDTO){
 
-
         for(Employee employee :companyInformationDTO.getEmployeeList()){
-            log.info("Employee found:{} ",employee);
-            log.info("Employee ID:{} ",employee.getId());
             Combine combine= new Combine();
             combine.setcompid(companyInformationDTO.getId());
             combine.setempid(employee.getId());
@@ -170,9 +137,5 @@ public class CompanyServiceImpl implements CompanyService {
         }
         return companyInformationDTO;
     }
-
-
-
-
 
 }

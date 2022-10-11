@@ -2,13 +2,10 @@ package com.postgre.empl.controller;
 
 import com.postgre.empl.model.Combine;
 import com.postgre.empl.service.CombineService;
-import com.postgre.empl.service.dto.CombineDTO;
-import com.postgre.empl.service.dto.CompanyEmployeeDTO;
 import com.postgre.empl.service.dto.CompanyInformationDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 
@@ -46,7 +43,5 @@ public class CombineController {
     public ResponseEntity<Combine> getCombineById(@PathVariable Long id) {
         return combineService.getId(id);
     }
-
-
 
 }

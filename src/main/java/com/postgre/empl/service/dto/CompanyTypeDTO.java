@@ -6,8 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
-import java.util.Optional;
-
 @Data
 @NoArgsConstructor
 @Log4j2
@@ -24,7 +22,4 @@ public class CompanyTypeDTO {
         this.setCompanyType(companyType.getcotype());
     }
 
-    public CompanyTypeDTO(String companyTypeID) {
-        log.info("CompanyTypeID :{} ",companyTypeID);
-    }
 }

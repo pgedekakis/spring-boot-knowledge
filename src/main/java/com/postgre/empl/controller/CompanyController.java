@@ -50,21 +50,14 @@ public class CompanyController {
 
         return companyService.createCompanyInfo(companyInformationDTO);
     }
-
     @DeleteMapping("/company/{id}")
     public void deleteCompany(@PathVariable Long id) {
         companyService.deleteCompany(id);
     }
-
     @PutMapping("/company/name")
     public CompanyInformationDTO updateCompany(@RequestBody CompanyInformationDTO companyInformationDTO) {
 
         return companyService.updateCompanyInfo(companyInformationDTO);
     }
-
-
-
-
-
 
 }
